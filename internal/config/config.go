@@ -21,6 +21,7 @@ type Configuration struct {
 	DBRetryDuration      int        `env:"DATABASE_RETRY_DURATION_SECONDS,required"`
 	HTTPPort             string     `env:"HTTP_PORT,required"`
 	HTTPDomain           string     `env:"HTTP_DOMAIN,required"`
+	HTTPUseSwagger       bool       `env:"HTTP_USE_SWAGGER,required"`
 	HTTPShutdownDuration int        `env:"HTTP_SHUTDOWN_DURATION,required"`
 }
 

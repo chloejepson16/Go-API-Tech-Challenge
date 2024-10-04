@@ -31,7 +31,7 @@ func RegisterRoutes(router *chi.Mux, logger *httplog.Logger, svs *services.Perso
 	}
 
 	if options.registerHealthRoute {
-		router.Get("/lambda/health-check", handlers.HandleHealth(logger))
+		router.Get("/health-check", handlers.HandleHealth(logger))
 	}
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {

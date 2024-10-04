@@ -15,6 +15,7 @@ import (
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/config"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/routes"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/services"
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/swagger"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -37,7 +38,7 @@ func run(ctx context.Context) error{
 		return fmt.Errorf("[in run]: %w", err)
 	}
 
-	logger := httplog.NewLogger("user-microservice", httplog.Options{
+	logger := httplog.NewLogger("courses-microservice", httplog.Options{
 		LogLevel:        cfg.LogLevel,
 		JSON:            false,
 		Concise:         true,
@@ -76,6 +77,10 @@ func run(ctx context.Context) error{
 
 	svs:= services.NewPersonService(db)
 	routes.RegisterRoutes(r, logger, svs, routes.WithRegisterHealthRoute(true))
+
+	if cfg.HTTPUseSwagger {
+		swagger.RunSwagger(r, logger, cfg.HTTPDomain+cfg.HTTPPort)
+	}
 
 	serverInstance := &http.Server{
 		Addr:              cfg.HTTPDomain + cfg.HTTPPort,

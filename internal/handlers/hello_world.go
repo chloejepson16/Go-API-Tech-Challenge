@@ -14,9 +14,11 @@ import (
 // @Produce		json
 // @Success		200		{object}	handlers.responseMsg
 // @Failure		500		{object}	handlers.responseErr
-// @Router		/user	[GET]
+// @Router		/	[GET]
 func HandleHelloWorld(logger *httplog.Logger) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request){
-		w.Write([]byte("Hello, World"))
+		encodeResponse(w, logger, http.StatusOK, responseMsg{
+			Message: "Hello, World!",
+		})
 	}
 }
