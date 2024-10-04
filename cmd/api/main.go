@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	_ "github.com/lib/pq"
 )
 
 func main(){
@@ -22,7 +24,7 @@ func run(ctx context.Context) error{
 	dbPort:= os.Getenv("DATABASE_PORT")
 	dbName:= "coursesDB"
 
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s", dbHost, dbPort, dbUser, dbPassword, dbName)
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
 	db, err:= sql.Open("postgres", dsn)
 	if err != nil{
 		log.Fatalf("Failed to open a DB connection: %v", err)
