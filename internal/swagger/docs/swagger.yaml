@@ -1,0 +1,47 @@
+definitions:
+  handlers.responseErr:
+    properties:
+      error:
+        type: string
+    type: object
+  handlers.responseMsg:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /health-check:
+    get:
+      consumes:
+      - application/json
+      description: Health check response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+      summary: Health check response
+      tags:
+      - health-check
+  /user:
+    get:
+      description: A test endpoint to get everything up and running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Hello, World!
+      tags:
+      - test
+swagger: "2.0"
