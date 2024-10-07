@@ -1,0 +1,46 @@
+package handlers
+
+import (
+	"context"
+	"net/http"
+
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
+	"github.com/go-chi/httplog/v2"
+)
+
+type peopleLister interface{
+	ListPeople(cts. context.Context) ([]models.Person, error)
+}
+
+// HandleListPeople is a Handler that returns a list of all users.
+//
+// @Summary		List all people
+// @Description	List all people
+// @Tags		people
+// @Accept		json
+// @Produce		json
+// @Success		200		{object}	handlers.responseMsg
+// @Failure		500		{object}	handlers.responseErr
+// @Router		/people	[GET]
+func HandleListPeople(logger *httplog.Logger, service peopleLister) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// setup
+		ctx := r.Context()
+
+		// get values from database
+		people, err := service.ListPeople(ctx)
+		if err != nil {
+			logger.Error("error getting all people", "error", err)
+			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+				Error: "Error retrieving data",
+			})
+			return
+		}
+
+		// return response
+		peopleOut := mapMultipleOutput(people)
+		encodeResponse(w, logger, http.StatusOK, responsePeople{
+			People: peopleOut,
+		})
+	}
+}
