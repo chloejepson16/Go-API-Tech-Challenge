@@ -40,4 +40,5 @@ func RegisterRoutes(router *chi.Mux, logger *httplog.Logger, svs *services.Perso
 
 	router.Get("/", handlers.HandleHelloWorld(logger))
 	router.Get("/people", handlers.HandleListPeople(logger, svs))
+	router.Get("/people/{id}", handlers.HandleGetPersonByID(logger, svs))
 }

@@ -46,8 +46,12 @@ func mapMultipleOutput(person []models.Person) []outputPerson {
 	return peopleOut
 }
 
+type responsePerson struct{
+	Person outputPerson `json:"person"`
+}
+
 type responsePeople struct {
-	People [] outputPerson `json:people`
+	People [] outputPerson `json:"people"`
 }
 
 // encodeResponse encodes data as a JSON response.

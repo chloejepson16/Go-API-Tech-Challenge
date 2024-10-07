@@ -44,4 +44,23 @@ paths:
       summary: Health check response
       tags:
       - health-check
+  /people:
+    get:
+      consumes:
+      - application/json
+      description: List all people
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: List all people
+      tags:
+      - people
 swagger: "2.0"

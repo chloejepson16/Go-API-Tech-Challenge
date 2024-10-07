@@ -63,6 +63,35 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/people": {
+            "get": {
+                "description": "List all people",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "people"
+                ],
+                "summary": "List all people",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseMsg"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseErr"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
