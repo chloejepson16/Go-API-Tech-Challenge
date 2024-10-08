@@ -56,18 +56,18 @@ func HandleListPeople(logger *httplog.Logger, service peopleLister) http.Handler
 // @Tags        people
 // @Accept      json
 // @Produce     json
-// @Param       id   path     string  true  "Person ID"
+// @Param       id   path     int  true  "id"
 // @Success		200		{object}	handlers.responseMsg
 // @Failure		500		{object}	handlers.responseErr
 // @Router      /people/{id}  [GET]
-
 func HandleGetPersonByID(logger *httplog.Logger, service peopleLister) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// setup
 		ctx := r.Context()
 		personId := chi.URLParam(r, "id")
+		fmt.Printf("ID is: %s", personId)
 		id, err := strconv.Atoi(personId)
-		fmt.Printf("personId: ", id)
+		fmt.Printf("ID 2 is: %d", id)
 
 		// get values from database
 		person, err := service.ListPersonByID(ctx, id)

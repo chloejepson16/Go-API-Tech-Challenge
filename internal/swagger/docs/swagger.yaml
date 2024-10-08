@@ -1,4 +1,17 @@
 definitions:
+  handlers.inputPerson:
+    properties:
+      age:
+        type: integer
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      type:
+        type: string
+    type: object
   handlers.responseErr:
     properties:
       error:
@@ -61,6 +74,85 @@ paths:
           schema:
             $ref: '#/definitions/handlers.responseErr'
       summary: List all people
+      tags:
+      - people
+  /people/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a person by their ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Delete person by ID
+      tags:
+      - people
+    get:
+      consumes:
+      - application/json
+      description: Get a person by their ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Get person by ID
+      tags:
+      - people
+    put:
+      consumes:
+      - application/json
+      description: Update a person by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Person Object
+        in: body
+        name: person
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.inputPerson'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Update a person by id
       tags:
       - people
 swagger: "2.0"
