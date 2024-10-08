@@ -16,6 +16,11 @@ type inputPerson struct {
 	Age       int    `json:"age"`
 }
 
+type inputCourse struct{
+	ID        int   `json:"id"`
+	Name string `json:"name"`
+}
+
 // MapTo maps a inputUser to a models.User object.
 func (person inputPerson) MapTo() (models.Person, error) {
 	return models.Person{
@@ -24,6 +29,14 @@ func (person inputPerson) MapTo() (models.Person, error) {
 		LastName:  person.LastName,
 		PersonType:      person.PersonType,
 		Age:    person.Age,
+	}, nil
+}
+
+// MapTo maps a inputUser to a models.User object.
+func (course inputCourse) MapTo() (models.Course, error) {
+	return models.Course{
+		ID:        int(course.ID),
+		Name: course.Name,
 	}, nil
 }
 
@@ -59,6 +72,28 @@ func (user inputPerson) Valid() []problem {
 		problems = append(problems, problem{
 			Name:        "user_id",
 			Description: "must be must be greater than zero",
+		})
+	}
+
+	return problems
+}
+
+// Valid validates all fields of an inputUser struct.
+func (course inputCourse) Valid() []problem {
+	var problems []problem
+
+	// validate LastName is not blank
+	if course.ID < 0 {
+		problems = append(problems, problem{
+			Name:        "id",
+			Description: "must not be less than 0",
+		})
+	}
+
+	if course.Name == "" {
+		problems = append(problems, problem{
+			Name:        "name",
+			Description: "must not be blank",
 		})
 	}
 

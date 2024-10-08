@@ -1,4 +1,11 @@
 definitions:
+  handlers.inputCourse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   handlers.inputPerson:
     properties:
       age:
@@ -59,6 +66,85 @@ paths:
           schema:
             $ref: '#/definitions/handlers.responseErr'
       summary: List all courses
+      tags:
+      - courses
+  /courses/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a course by their ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Delete course by ID
+      tags:
+      - courses
+    get:
+      consumes:
+      - application/json
+      description: Get a course by their ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Get course by ID
+      tags:
+      - courses
+    put:
+      consumes:
+      - application/json
+      description: Update a course by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Course Object
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.inputCourse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: Update a course by id
       tags:
       - courses
   /health-check:

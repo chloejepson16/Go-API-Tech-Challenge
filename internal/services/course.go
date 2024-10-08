@@ -23,7 +23,7 @@ func (s CourseService) ListCourses(ctx context.Context) ([]models.Course, error)
 	)
 
 	if err != nil{
-		return []models.Course{}, fmt.Errorf("[in services.ListPeople] failed to get people: %w", err)
+		return []models.Course{}, fmt.Errorf("[in services.ListCourses] failed to get courses: %w", err)
 	}
 
 	defer rows.Close()
@@ -34,14 +34,88 @@ func (s CourseService) ListCourses(ctx context.Context) ([]models.Course, error)
 		var course models.Course
 		err = rows.Scan(&course.ID, &course.Name)
 		if err != nil {
-			return []models.Course{}, fmt.Errorf("[in services.ListPeople] failed to scan user from row: %w", err)
+			return []models.Course{}, fmt.Errorf("[in services.ListCourses] failed to scan user from row: %w", err)
 		}
 		courses = append(courses, course)
 
 		if err = rows.Err(); err != nil {
-			return []models.Course{}, fmt.Errorf("[in services.ListPeople] failed to scan people: %w", err)
+			return []models.Course{}, fmt.Errorf("[in services.ListCourses] failed to scan courses: %w", err)
 		}
 	}
 
 	return courses, nil
+}
+
+func (s CourseService) ListCourseByID(ctx context.Context, id int) (models.Course, error){
+    row := s.database.QueryRowContext(
+        ctx,
+        `SELECT id, name FROM "course" WHERE id = $1`,
+        id,
+    )
+	var course models.Course
+
+	err := row.Scan(&course.ID, &course.Name)
+    if err != nil {
+        if err == sql.ErrNoRows {
+            return models.Course{}, fmt.Errorf("[in services.GetCourseByID] no course found with ID: %w", err)
+        }
+        return models.Course{}, fmt.Errorf("[in services.GetCourseByID] failed to scan course: %w", err)
+    }
+
+	return course, nil
+}
+
+// UpdateCourse updates am CourseService objects from the database by ID.
+func (s CourseService) UpdateCourse(ctx context.Context, ID int, course models.Course) (models.Course, error) {
+	_, err := s.database.ExecContext(
+		ctx,
+		`
+		UPDATE
+			"course"
+		SET
+			"id" = $1,
+			"name" = $2
+		WHERE
+			"id" = $3
+		`,
+		course.ID,
+		course.Name,
+		ID,
+	)
+	if err != nil {
+		return models.Course{}, fmt.Errorf("[in services.UpdateUser] failed to update user: %w", err)
+	}
+
+	course.ID = int(ID)
+	return course, nil
+}
+
+func (s CourseService) DeleteCourseByID(ctx context.Context, id int) (models.Course, error){
+	course, err := s.ListCourseByID(ctx, id)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			//check course first
+			return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] no course found with ID: %d", id)
+		}
+		return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] failed to retrieve course: %w", err)
+	}
+
+	result, err := s.database.ExecContext(
+		ctx,
+		`DELETE FROM "course" WHERE id = $1`,
+		id,
+	)
+
+	if err != nil {
+		return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] failed to execute delete: %w", err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] failed to get rows affected: %w", err)
+	}
+	if rowsAffected == 0 {
+		return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] no course found with ID: %d", id)
+	}
+	return course, nil
+
 }

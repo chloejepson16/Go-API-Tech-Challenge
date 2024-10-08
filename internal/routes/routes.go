@@ -58,4 +58,7 @@ func RegisterRoutesForCourses(router *chi.Mux, logger *httplog.Logger, svs *serv
 		router.Get("/health-check", handlers.HandleHealth(logger))
 	}
 	router.Get("/courses", handlers.HandleListCourses(logger, svs))
+	router.Get("/courses/{id}", handlers.HandleGetCourseById(logger, svs))
+	router.Put("/courses/{id}", handlers.HandleUpdateCourse(logger, svs))
+	router.Delete("/courses/{id}", handlers.HandleDeleteCourseByID(logger, svs))
 }
