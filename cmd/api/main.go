@@ -76,7 +76,9 @@ func run(ctx context.Context) error{
 	}))
 
 	svs:= services.NewPersonService(db)
+	svsCourses:= services.NewCourseService(db)
 	routes.RegisterRoutes(r, logger, svs, routes.WithRegisterHealthRoute(true))
+	routes.RegisterRoutesForCourses(r, logger, svsCourses, routes.WithRegisterHealthRoute(true))
 
 	if cfg.HTTPUseSwagger {
 		swagger.RunSwagger(r, logger, cfg.HTTPDomain+cfg.HTTPPort)

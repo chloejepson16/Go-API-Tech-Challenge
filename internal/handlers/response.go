@@ -24,6 +24,11 @@ type outputPerson struct {
 	Age       int    `json:"age"`
 }
 
+type outputCourse struct {
+	ID        int   `json:"id"`
+	Name string `json:"name"`
+}
+
 // mapOutput maps a models.User struct to an outputUser struct.
 func mapOutput(person models.Person) outputPerson {
 	return outputPerson{
@@ -32,6 +37,14 @@ func mapOutput(person models.Person) outputPerson {
 		LastName:  person.LastName,
 		PersonType:      person.PersonType,
 		Age:    person.Age,
+	}
+}
+
+// mapOutput maps a models.User struct to an outputUser struct.
+func mapOutputCourse(course models.Course) outputCourse {
+	return outputCourse{
+		ID:        int(course.ID),
+		Name: course.Name,
 	}
 }
 
@@ -46,12 +59,32 @@ func mapMultipleOutput(person []models.Person) []outputPerson {
 	return peopleOut
 }
 
+// mapMultipleOutput maps a slice of []models.User to a slice of []outputUser.
+func mapMultipleCourseOutput(course []models.Course) []outputCourse {
+	coursesOut := make([]outputCourse, len(course))
+	for i := 0; i < len(course); i++ {
+		courseOut := mapOutputCourse(course[i])
+		coursesOut[i] = courseOut
+	}
+
+	return coursesOut
+}
+
+
 type responsePerson struct{
 	Person outputPerson `json:"person"`
 }
 
 type responsePeople struct {
 	People [] outputPerson `json:"people"`
+}
+
+type responseCourse struct{
+	Course outputCourse `json:"course"`
+}
+
+type responseCourses struct {
+	Courses [] outputCourse `json:"courses"`
 }
 
 // encodeResponse encodes data as a JSON response.

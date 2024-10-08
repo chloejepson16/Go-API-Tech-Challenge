@@ -42,6 +42,25 @@ paths:
       summary: Hello, World!
       tags:
       - test
+  /courses:
+    get:
+      consumes:
+      - application/json
+      description: List all courses
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.responseMsg'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.responseErr'
+      summary: List all courses
+      tags:
+      - courses
   /health-check:
     get:
       consumes:

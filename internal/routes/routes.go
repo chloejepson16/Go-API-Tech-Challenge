@@ -44,3 +44,18 @@ func RegisterRoutes(router *chi.Mux, logger *httplog.Logger, svs *services.Perso
 	router.Put("/people/{id}", handlers.HandleUpdatePerson(logger, svs))
 	router.Delete("/people/{id}", handlers.HandleDeletePersonByID(logger, svs))
 }
+
+func RegisterRoutesForCourses(router *chi.Mux, logger *httplog.Logger, svs *services.CourseService, opts ...Option){
+	options:= routerOptions{
+		registerHealthRoute: false,
+	}
+
+	for _, opt := range opts {
+		opt(&options)
+	}
+
+	if options.registerHealthRoute {
+		router.Get("/health-check", handlers.HandleHealth(logger))
+	}
+	router.Get("/courses", handlers.HandleListCourses(logger, svs))
+}
