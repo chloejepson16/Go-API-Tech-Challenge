@@ -67,6 +67,28 @@ func (s PersonService) ListPersonByID(ctx context.Context, id int) (models.Perso
 	return person, nil
 }
 
+// CreatePerson creates a PersonService objects from the database by ID.
+func (s PersonService) CreatePerson(ctx context.Context, person models.Person) (models.Person, error) {
+	err:= s.database.QueryRowContext(
+		ctx,
+	   `INSERT INTO "person" (id, first_name, last_name, type, age)
+		VALUES ($1, $2, $3, $4, $5)
+		RETURNING id, first_name, last_name, type, age;
+		`,
+		person.ID,
+		person.FirstName,
+		person.LastName,
+		person.PersonType,
+		person.Age,
+	).Scan(&person.ID, &person.FirstName, &person.LastName, &person.PersonType, &person.Age)
+
+	if err != nil {
+		return models.Person{}, fmt.Errorf("[in services.CreatePerson] failed to create person: %w", err)
+	}
+
+	return person, nil
+}
+
 func (s PersonService) DeletePersonByID(ctx context.Context, id int) (models.Person, error){
 	person, err := s.ListPersonByID(ctx, id)
 	if err != nil {

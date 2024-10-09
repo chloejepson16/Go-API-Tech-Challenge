@@ -43,6 +43,7 @@ func RegisterRoutes(router *chi.Mux, logger *httplog.Logger, svs *services.Perso
 	router.Get("/people/{id}", handlers.HandleGetPersonByID(logger, svs))
 	router.Put("/people/{id}", handlers.HandleUpdatePerson(logger, svs))
 	router.Delete("/people/{id}", handlers.HandleDeletePersonByID(logger, svs))
+	router.Post("/people", handlers.HandleCreatePerson(logger, svs))
 }
 
 func RegisterRoutesForCourses(router *chi.Mux, logger *httplog.Logger, svs *services.CourseService, opts ...Option){
@@ -61,4 +62,5 @@ func RegisterRoutesForCourses(router *chi.Mux, logger *httplog.Logger, svs *serv
 	router.Get("/courses/{id}", handlers.HandleGetCourseById(logger, svs))
 	router.Put("/courses/{id}", handlers.HandleUpdateCourse(logger, svs))
 	router.Delete("/courses/{id}", handlers.HandleDeleteCourseByID(logger, svs))
+	router.Post("/courses", handlers.HandleCreateCourse(logger, svs))
 }

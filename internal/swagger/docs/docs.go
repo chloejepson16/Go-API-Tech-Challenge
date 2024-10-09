@@ -68,6 +68,44 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Create a course",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Create a course",
+                "parameters": [
+                    {
+                        "description": "Course Object",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.inputCourse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseMsg"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseErr"
+                        }
+                    }
+                }
             }
         },
         "/courses/{id}": {
@@ -225,6 +263,44 @@ const docTemplate = `{
                     "people"
                 ],
                 "summary": "List all people",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseMsg"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseErr"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a person",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "people"
+                ],
+                "summary": "Create a person",
+                "parameters": [
+                    {
+                        "description": "Person Object",
+                        "name": "person",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.inputPerson"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

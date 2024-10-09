@@ -90,6 +90,25 @@ func (s CourseService) UpdateCourse(ctx context.Context, ID int, course models.C
 	return course, nil
 }
 
+// CreateCourse updates am CourseService objects from the database by ID.
+func (s CourseService) CreateCourse(ctx context.Context, course models.Course) (models.Course, error) {
+	err:= s.database.QueryRowContext(
+		ctx,
+	   `INSERT INTO "course" (id, name)
+		VALUES ($1, $2)
+		RETURNING id, name;
+		`,
+		course.ID,
+		course.Name,
+	).Scan(&course.ID, &course.Name)
+
+	if err != nil {
+		return models.Course{}, fmt.Errorf("[in services.CreateCourse] failed to create course: %w", err)
+	}
+
+	return course, nil
+}
+
 func (s CourseService) DeleteCourseByID(ctx context.Context, id int) (models.Course, error){
 	course, err := s.ListCourseByID(ctx, id)
 	if err != nil {
