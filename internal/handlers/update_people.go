@@ -22,9 +22,9 @@ type personUpdater interface {
 // @Accept		json
 // @Produce		json
 // @Param		id			path		int	true						"id"
-// @Param		person		body		handlers.inputPerson		true	"Person Object"
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Param		person		body		handlers.InputPerson		true	"Person Object"
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/people/{id}	[PUT]
 func HandleUpdatePerson(logger *httplog.Logger, service personUpdater) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -36,24 +36,24 @@ func HandleUpdatePerson(logger *httplog.Logger, service personUpdater) http.Hand
 		id, err := strconv.Atoi(idString)
 		if err != nil {
 			logger.Error("error getting ID", "error", err)
-			encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+			EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 				Error: "Not a valid ID",
 			})
 			return
 		}
 
 		// get and validate body as object
-		personIn, problems, err := decodeValidateBody[inputPerson, models.Person](r)
+		personIn, problems, err := DecodeValidateBody[InputPerson, models.Person](r)
 		if err != nil {
 			switch {
 			case len(problems) > 0:
 				logger.Error("Problems validating input", "error", err, "problems", problems)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "error validating personIn",
 				})
 			default:
 				logger.Error("BodyParser error", "error", err)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "missing values or malformed body",
 				})
 			}
@@ -64,15 +64,15 @@ func HandleUpdatePerson(logger *httplog.Logger, service personUpdater) http.Hand
 		user, err := service.UpdatePerson(ctx, id, personIn)
 		if err != nil {
 			logger.Error("error updating object in database", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error updating object",
 			})
 			return
 		}
 
 		// return response
-		personOut := mapOutput(user)
-		encodeResponse(w, logger, http.StatusOK, responsePerson{
+		personOut := MapOutput(user)
+		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
 			Person: personOut,
 		})
 	}

@@ -22,9 +22,9 @@ type courseUpdater interface {
 // @Accept		json
 // @Produce		json
 // @Param		id			path		int	true						"id"
-// @Param		course		body		handlers.inputCourse		true	"Course Object"
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Param		course		body		handlers.InputCourse		true	"Course Object"
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/courses/{id}	[PUT]
 func HandleUpdateCourse(logger *httplog.Logger, service courseUpdater) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -36,24 +36,24 @@ func HandleUpdateCourse(logger *httplog.Logger, service courseUpdater) http.Hand
 		id, err := strconv.Atoi(idString)
 		if err != nil {
 			logger.Error("error getting ID", "error", err)
-			encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+			EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 				Error: "Not a valid ID",
 			})
 			return
 		}
 
 		// get and validate body as object
-		courseIn, problems, err := decodeValidateBody[inputCourse, models.Course](r)
+		courseIn, problems, err := DecodeValidateBody[InputCourse, models.Course](r)
 		if err != nil {
 			switch {
 			case len(problems) > 0:
 				logger.Error("Problems validating input", "error", err, "problems", problems)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "error validating courseIn",
 				})
 			default:
 				logger.Error("BodyParser error", "error", err)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "missing values or malformed body",
 				})
 			}
@@ -64,15 +64,15 @@ func HandleUpdateCourse(logger *httplog.Logger, service courseUpdater) http.Hand
 		course, err := service.UpdateCourse(ctx, id, courseIn)
 		if err != nil {
 			logger.Error("error updating object in database", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error updating object",
 			})
 			return
 		}
 
 		// return response
-		courseOut := mapOutputCourse(course)
-		encodeResponse(w, logger, http.StatusOK, responseCourse{
+		courseOut := MapOutputCourse(course)
+		EncodeResponse(w, logger, http.StatusOK, ResponseCourse{
 			Course: courseOut,
 		})
 	}

@@ -19,26 +19,26 @@ type personCreator interface{
 // @Tags		people
 // @Accept		json
 // @Produce		json
-// @Param		person		body		handlers.inputPerson		true	"Person Object"
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Param		person		body		handlers.InputPerson		true	"Person Object"
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/people	[POST]
 func HandleCreatePerson(logger *httplog.Logger, service personCreator) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request){
 		ctx := r.Context()
 
 		// get and validate body as object
-		personIn, problems, err := decodeValidateBody[inputPerson, models.Person](r)
+		personIn, problems, err := DecodeValidateBody[InputPerson](r)
 		if err != nil {
 			switch {
 			case len(problems) > 0:
 				logger.Error("Problems validating input", "error", err, "problems", problems)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "error validating personIn",
 				})
 			default:
 				logger.Error("BodyParser error", "error", err)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "missing values or malformed body",
 				})
 			}
@@ -48,15 +48,15 @@ func HandleCreatePerson(logger *httplog.Logger, service personCreator) http.Hand
 		person, err:= service.CreatePerson(ctx, personIn)
 		if err != nil {
 			logger.Error("error creating object in database", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error creating object",
 			})
 			return
 		}
 
 		// return response
-		personOut := mapOutput(person)
-		encodeResponse(w, logger, http.StatusOK, responsePerson{
+		personOut := MapOutput(person)
+		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
 			Person: personOut,
 		})
 	}

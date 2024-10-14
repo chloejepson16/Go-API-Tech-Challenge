@@ -19,26 +19,26 @@ type courseCreator interface{
 // @Tags		courses
 // @Accept		json
 // @Produce		json
-// @Param		course		body		handlers.inputCourse		true	"Course Object"
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Param		course		body		handlers.InputCourse		true	"Course Object"
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/courses	[POST]
 func HandleCreateCourse(logger *httplog.Logger, service courseCreator) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request){
 		ctx := r.Context()
 
 		// get and validate body as object
-		courseIn, problems, err := decodeValidateBody[inputCourse, models.Course](r)
+		courseIn, problems, err := DecodeValidateBody[InputCourse](r)
 		if err != nil {
 			switch {
 			case len(problems) > 0:
 				logger.Error("Problems validating input", "error", err, "problems", problems)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "error validating courseIn",
 				})
 			default:
 				logger.Error("BodyParser error", "error", err)
-				encodeResponse(w, logger, http.StatusBadRequest, responseErr{
+				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
 					Error: "missing values or malformed body",
 				})
 			}
@@ -48,15 +48,15 @@ func HandleCreateCourse(logger *httplog.Logger, service courseCreator) http.Hand
 		course, err:= service.CreateCourse(ctx, courseIn)
 		if err != nil {
 			logger.Error("error creating object in database", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error creating object",
 			})
 			return
 		}
 
 		// return response
-		courseOut := mapOutputCourse(course)
-		encodeResponse(w, logger, http.StatusOK, responseCourse{
+		courseOut := MapOutputCourse(course)
+		EncodeResponse(w, logger, http.StatusOK, ResponseCourse{
 			Course: courseOut,
 		})
 	}

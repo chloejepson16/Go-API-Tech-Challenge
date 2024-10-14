@@ -1,12 +1,12 @@
 definitions:
-  handlers.inputCourse:
+  handlers.InputCourse:
     properties:
       id:
         type: integer
       name:
         type: string
     type: object
-  handlers.inputPerson:
+  handlers.InputPerson:
     properties:
       age:
         type: integer
@@ -19,12 +19,12 @@ definitions:
       type:
         type: string
     type: object
-  handlers.responseErr:
+  handlers.ResponseErr:
     properties:
       error:
         type: string
     type: object
-  handlers.responseMsg:
+  handlers.ResponseMsg:
     properties:
       message:
         type: string
@@ -36,278 +36,278 @@ paths:
     get:
       description: A test endpoint to get everything up and running
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Hello, World!
       tags:
-      - test
+        - test
   /courses:
     get:
       consumes:
-      - application/json
+        - application/json
       description: List all courses
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: List all courses
       tags:
-      - courses
+        - courses
     post:
       consumes:
-      - application/json
+        - application/json
       description: Create a course
       parameters:
-      - description: Course Object
-        in: body
-        name: course
-        required: true
-        schema:
-          $ref: '#/definitions/handlers.inputCourse'
+        - description: Course Object
+          in: body
+          name: course
+          required: true
+          schema:
+            $ref: "#/definitions/handlers.InputCourse"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Create a course
       tags:
-      - courses
+        - courses
   /courses/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete a course by their ID
       parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Delete course by ID
       tags:
-      - courses
+        - courses
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get a course by their ID
       parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Get course by ID
       tags:
-      - courses
+        - courses
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update a course by id
       parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Course Object
-        in: body
-        name: course
-        required: true
-        schema:
-          $ref: '#/definitions/handlers.inputCourse'
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: Course Object
+          in: body
+          name: course
+          required: true
+          schema:
+            $ref: "#/definitions/handlers.InputCourse"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Update a course by id
       tags:
-      - courses
+        - courses
   /health-check:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Health check response
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
       summary: Health check response
       tags:
-      - health-check
+        - health-check
   /people:
     get:
       consumes:
-      - application/json
+        - application/json
       description: List all people
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: List all people
       tags:
-      - people
+        - people
     post:
       consumes:
-      - application/json
+        - application/json
       description: Create a person
       parameters:
-      - description: Person Object
-        in: body
-        name: person
-        required: true
-        schema:
-          $ref: '#/definitions/handlers.inputPerson'
+        - description: Person Object
+          in: body
+          name: person
+          required: true
+          schema:
+            $ref: "#/definitions/handlers.InputPerson"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Create a person
       tags:
-      - people
+        - people
   /people/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete a person by their ID
       parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Delete person by ID
       tags:
-      - people
+        - people
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get a person by their ID
       parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Get person by ID
       tags:
-      - people
+        - people
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update a person by id
       parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Person Object
-        in: body
-        name: person
-        required: true
-        schema:
-          $ref: '#/definitions/handlers.inputPerson'
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: Person Object
+          in: body
+          name: person
+          required: true
+          schema:
+            $ref: "#/definitions/handlers.InputPerson"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.responseMsg'
+            $ref: "#/definitions/handlers.ResponseMsg"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handlers.responseErr'
+            $ref: "#/definitions/handlers.ResponseErr"
       summary: Update a person by id
       tags:
-      - people
+        - people
 swagger: "2.0"

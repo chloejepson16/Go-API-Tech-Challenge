@@ -23,8 +23,8 @@ type peopleLister interface{
 // @Tags		people
 // @Accept		json
 // @Produce		json
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/people	[GET]
 func HandleListPeople(logger *httplog.Logger, service peopleLister) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -35,15 +35,15 @@ func HandleListPeople(logger *httplog.Logger, service peopleLister) http.Handler
 		people, err := service.ListPeople(ctx)
 		if err != nil {
 			logger.Error("error getting all people", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
 
 		// return response
-		peopleOut := mapMultipleOutput(people)
-		encodeResponse(w, logger, http.StatusOK, responsePeople{
+		peopleOut := MapMultipleOutput(people)
+		EncodeResponse(w, logger, http.StatusOK, ResponsePeople{
 			People: peopleOut,
 		})
 	}
@@ -57,8 +57,8 @@ func HandleListPeople(logger *httplog.Logger, service peopleLister) http.Handler
 // @Accept      json
 // @Produce     json
 // @Param       id   path     int  true  "id"
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router      /people/{id}  [GET]
 func HandleGetPersonByID(logger *httplog.Logger, service peopleLister) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -73,13 +73,13 @@ func HandleGetPersonByID(logger *httplog.Logger, service peopleLister) http.Hand
 		person, err := service.ListPersonByID(ctx, id)
 		if err != nil {
 			logger.Error("error getting specific people", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		encodeResponse(w, logger, http.StatusOK, responsePerson{
-			Person: mapOutput(person),
+		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
+			Person: MapOutput(person),
 		})
 	}
 }

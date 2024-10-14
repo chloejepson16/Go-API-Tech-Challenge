@@ -23,8 +23,8 @@ type courseDeleter interface{
 // @Accept      json
 // @Produce     json
 // @Param       id   path     int  true  "id"
-// @Success     200  {object}    handlers.responseMsg
-// @Failure     500  {object}    handlers.responseErr
+// @Success     200  {object}    handlers.ResponseMsg
+// @Failure     500  {object}    handlers.ResponseErr
 // @Router      /courses/{id}  [DELETE]
 func HandleDeleteCourseByID(logger *httplog.Logger, service courseDeleter) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request){
@@ -38,13 +38,13 @@ func HandleDeleteCourseByID(logger *httplog.Logger, service courseDeleter) http.
 		course, err:= service.DeleteCourseByID(ctx, id)
 		if err != nil{
 			logger.Error("error deleting specific people", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		encodeResponse(w, logger, http.StatusOK, responseCourse{
-			Course: mapOutputCourse(course),
+		EncodeResponse(w, logger, http.StatusOK, ResponseCourse{
+			Course: MapOutputCourse(course),
 		})
 	}
 }

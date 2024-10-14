@@ -1,478 +1,408 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "contact": {}
-    },
-    "paths": {
-        "/": {
-            "get": {
-                "description": "A test endpoint to get everything up and running",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "test"
-                ],
-                "summary": "Hello, World!",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
+  "swagger": "2.0",
+  "info": {
+    "contact": {}
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "description": "A test endpoint to get everything up and running",
+        "produces": ["application/json"],
+        "tags": ["test"],
+        "summary": "Hello, World!",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
             }
-        },
-        "/courses": {
-            "get": {
-                "description": "List all courses",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "courses"
-                ],
-                "summary": "List all courses",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create a course",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "courses"
-                ],
-                "summary": "Create a course",
-                "parameters": [
-                    {
-                        "description": "Course Object",
-                        "name": "course",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.inputCourse"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
             }
-        },
-        "/courses/{id}": {
-            "get": {
-                "description": "Get a course by their ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "courses"
-                ],
-                "summary": "Get course by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update a course by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "courses"
-                ],
-                "summary": "Update a course by id",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Course Object",
-                        "name": "course",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.inputCourse"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete a course by their ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "courses"
-                ],
-                "summary": "Delete course by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            }
-        },
-        "/health-check": {
-            "get": {
-                "description": "Health check response",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "health-check"
-                ],
-                "summary": "Health check response",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    }
-                }
-            }
-        },
-        "/people": {
-            "get": {
-                "description": "List all people",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "people"
-                ],
-                "summary": "List all people",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create a person",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "people"
-                ],
-                "summary": "Create a person",
-                "parameters": [
-                    {
-                        "description": "Person Object",
-                        "name": "person",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.inputPerson"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            }
-        },
-        "/people/{id}": {
-            "get": {
-                "description": "Get a person by their ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "people"
-                ],
-                "summary": "Get person by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update a person by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "people"
-                ],
-                "summary": "Update a person by id",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Person Object",
-                        "name": "person",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.inputPerson"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete a person by their ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "people"
-                ],
-                "summary": "Delete person by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
-                        }
-                    }
-                }
-            }
+          }
         }
+      }
     },
-    "definitions": {
-        "handlers.inputCourse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
+    "/courses": {
+      "get": {
+        "description": "List all courses",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["courses"],
+        "summary": "List all courses",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
             }
-        },
-        "handlers.inputPerson": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "type": "integer"
-                },
-                "first_name": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
             }
-        },
-        "handlers.responseErr": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string"
-                }
-            }
-        },
-        "handlers.responseMsg": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
+          }
         }
+      },
+      "post": {
+        "description": "Create a course",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["courses"],
+        "summary": "Create a course",
+        "parameters": [
+          {
+            "description": "Course Object",
+            "name": "course",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/handlers.InputCourse"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      }
+    },
+    "/courses/{id}": {
+      "get": {
+        "description": "Get a course by their ID",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["courses"],
+        "summary": "Get course by ID",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update a course by id",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["courses"],
+        "summary": "Update a course by id",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Course Object",
+            "name": "course",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/handlers.InputCourse"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a course by their ID",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["courses"],
+        "summary": "Delete course by ID",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      }
+    },
+    "/health-check": {
+      "get": {
+        "description": "Health check response",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["health-check"],
+        "summary": "Health check response",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          }
+        }
+      }
+    },
+    "/people": {
+      "get": {
+        "description": "List all people",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["people"],
+        "summary": "List all people",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a person",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["people"],
+        "summary": "Create a person",
+        "parameters": [
+          {
+            "description": "Person Object",
+            "name": "person",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/handlers.InputPerson"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      }
+    },
+    "/people/{id}": {
+      "get": {
+        "description": "Get a person by their ID",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["people"],
+        "summary": "Get person by ID",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update a person by id",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["people"],
+        "summary": "Update a person by id",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Person Object",
+            "name": "person",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/handlers.InputPerson"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a person by their ID",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["people"],
+        "summary": "Delete person by ID",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseMsg"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/handlers.ResponseErr"
+            }
+          }
+        }
+      }
     }
+  },
+  "definitions": {
+    "handlers.InputCourse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "handlers.InputPerson": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "handlers.ResponseErr": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "handlers.ResponseMsg": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }

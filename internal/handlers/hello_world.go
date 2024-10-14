@@ -12,12 +12,12 @@ import (
 // @Description A test endpoint to get everything up and running
 // @Tags		test
 // @Produce		json
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/	[GET]
 func HandleHelloWorld(logger *httplog.Logger) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request){
-		encodeResponse(w, logger, http.StatusOK, responseMsg{
+		EncodeResponse(w, logger, http.StatusOK, ResponseMsg{
 			Message: "Hello, World!",
 		})
 	}

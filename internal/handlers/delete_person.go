@@ -23,8 +23,8 @@ type peopleDeleter interface{
 // @Accept      json
 // @Produce     json
 // @Param       id   path     int  true  "id"
-// @Success     200  {object}    handlers.responseMsg
-// @Failure     500  {object}    handlers.responseErr
+// @Success     200  {object}    handlers.ResponseMsg
+// @Failure     500  {object}    handlers.ResponseErr
 // @Router      /people/{id}  [DELETE]
 func HandleDeletePersonByID(logger *httplog.Logger, service peopleDeleter) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request){
@@ -38,13 +38,13 @@ func HandleDeletePersonByID(logger *httplog.Logger, service peopleDeleter) http.
 		person, err:= service.DeletePersonByID(ctx, id)
 		if err != nil{
 			logger.Error("error deleting specific people", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		encodeResponse(w, logger, http.StatusOK, responsePerson{
-			Person: mapOutput(person),
+		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
+			Person: MapOutput(person),
 		})
 	}
 }

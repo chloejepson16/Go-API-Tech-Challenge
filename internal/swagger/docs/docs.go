@@ -29,13 +29,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -58,13 +58,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -88,7 +88,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.inputCourse"
+                            "$ref": "#/definitions/handlers.InputCourse"
                         }
                     }
                 ],
@@ -96,13 +96,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -134,13 +134,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -171,7 +171,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.inputCourse"
+                            "$ref": "#/definitions/handlers.InputCourse"
                         }
                     }
                 ],
@@ -179,13 +179,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -215,13 +215,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -244,7 +244,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     }
                 }
@@ -267,13 +267,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -297,7 +297,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.inputPerson"
+                            "$ref": "#/definitions/handlers.InputPerson"
                         }
                     }
                 ],
@@ -305,13 +305,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -343,13 +343,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -380,7 +380,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.inputPerson"
+                            "$ref": "#/definitions/handlers.InputPerson"
                         }
                     }
                 ],
@@ -388,13 +388,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -424,13 +424,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseMsg"
+                            "$ref": "#/definitions/handlers.ResponseMsg"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handlers.responseErr"
+                            "$ref": "#/definitions/handlers.ResponseErr"
                         }
                     }
                 }
@@ -438,7 +438,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handlers.inputCourse": {
+        "handlers.InputCourse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -449,7 +449,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.inputPerson": {
+        "handlers.InputPerson": {
             "type": "object",
             "properties": {
                 "age": {
@@ -469,7 +469,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.responseErr": {
+        "handlers.ResponseErr": {
             "type": "object",
             "properties": {
                 "error": {
@@ -477,7 +477,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.responseMsg": {
+        "handlers.ResponseMsg": {
             "type": "object",
             "properties": {
                 "message": {

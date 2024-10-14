@@ -8,7 +8,7 @@ import (
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 )
 
-type inputPerson struct {
+type InputPerson struct {
 	ID        int   `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
@@ -16,13 +16,13 @@ type inputPerson struct {
 	Age       int    `json:"age"`
 }
 
-type inputCourse struct{
+type InputCourse struct{
 	ID        int   `json:"id"`
 	Name string `json:"name"`
 }
 
 // MapTo maps a inputUser to a models.User object.
-func (person inputPerson) MapTo() (models.Person, error) {
+func (person InputPerson) MapTo() (models.Person, error) {
 	return models.Person{
 		ID:        int(person.ID),
 		FirstName: person.FirstName,
@@ -33,7 +33,7 @@ func (person inputPerson) MapTo() (models.Person, error) {
 }
 
 // MapTo maps a inputUser to a models.User object.
-func (course inputCourse) MapTo() (models.Course, error) {
+func (course InputCourse) MapTo() (models.Course, error) {
 	return models.Course{
 		ID:        int(course.ID),
 		Name: course.Name,
@@ -41,7 +41,7 @@ func (course inputCourse) MapTo() (models.Course, error) {
 }
 
 // Valid validates all fields of an inputUser struct.
-func (user inputPerson) Valid() []problem {
+func (user InputPerson) Valid() []problem {
 	var problems []problem
 
 	// validate FirstName is not blank
@@ -79,7 +79,7 @@ func (user inputPerson) Valid() []problem {
 }
 
 // Valid validates all fields of an inputUser struct.
-func (course inputCourse) Valid() []problem {
+func (course InputCourse) Valid() []problem {
 	var problems []problem
 
 	// validate LastName is not blank
@@ -126,21 +126,21 @@ type ValidatorMapper[T any] interface {
 	Mapper[T]
 }
 
-// decodeValidateBody decodes a JSON string into a ValidatorMapper, validates it, and maps it to
+// DecodeValidateBody decodes a JSON string into a ValidatorMapper, validates it, and maps it to
 // the output type. If decoding, validation, or mapping fails, it returns the appropriate errors
 // and problems.
-func decodeValidateBody[I ValidatorMapper[O], O any](r *http.Request) (O, []problem, error) {
+func DecodeValidateBody[I ValidatorMapper[O], O any](r *http.Request) (O, []problem, error) {
 	var inputModel I
 
 	// decode to JSON
 	if err := json.NewDecoder(r.Body).Decode(&inputModel); err != nil {
-		return *new(O), nil, fmt.Errorf("[in decodeValidateBody] decode json: %w", err)
+		return *new(O), nil, fmt.Errorf("[in DecodeValidateBody] decode json: %w", err)
 	}
 
 	// validate
 	if problems := inputModel.Valid(); len(problems) > 0 {
 		return *new(O), problems, fmt.Errorf(
-			"[in decodeValidateBody] invalid %T: %d problems", inputModel, len(problems),
+			"[in DecodeValidateBody] invalid %T: %d problems", inputModel, len(problems),
 		)
 	}
 
@@ -148,7 +148,7 @@ func decodeValidateBody[I ValidatorMapper[O], O any](r *http.Request) (O, []prob
 	data, err := inputModel.MapTo()
 	if err != nil {
 		return *new(O), nil, fmt.Errorf(
-			"[in decodeValidateBody] error mapping input %T to %T: %w",
+			"[in DecodeValidateBody] error mapping input %T to %T: %w",
 			*new(I),
 			*new(O),
 			err,

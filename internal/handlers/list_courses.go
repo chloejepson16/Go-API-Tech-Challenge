@@ -23,8 +23,8 @@ type courseLister interface{
 // @Tags		courses
 // @Accept		json
 // @Produce		json
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router		/courses	[GET]
 func HandleListCourses(logger *httplog.Logger, service courseLister) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -35,15 +35,15 @@ func HandleListCourses(logger *httplog.Logger, service courseLister) http.Handle
 		courses, err := service.ListCourses(ctx)
 		if err != nil {
 			logger.Error("error getting all courses", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
 
 		// return response
-		coursesOut := mapMultipleCourseOutput(courses)
-		encodeResponse(w, logger, http.StatusOK, responseCourses{
+		coursesOut := MapMultipleCourseOutput(courses)
+		EncodeResponse(w, logger, http.StatusOK, ResponseCourses{
 			Courses: coursesOut,
 		})
 	}
@@ -57,8 +57,8 @@ func HandleListCourses(logger *httplog.Logger, service courseLister) http.Handle
 // @Accept      json
 // @Produce     json
 // @Param       id   path     int  true  "id"
-// @Success		200		{object}	handlers.responseMsg
-// @Failure		500		{object}	handlers.responseErr
+// @Success		200		{object}	handlers.ResponseMsg
+// @Failure		500		{object}	handlers.ResponseErr
 // @Router      /courses/{id}  [GET]
 func HandleGetCourseById(logger *httplog.Logger, service courseLister) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -73,13 +73,13 @@ func HandleGetCourseById(logger *httplog.Logger, service courseLister) http.Hand
 		course, err := service.ListCourseByID(ctx, id)
 		if err != nil {
 			logger.Error("error getting specific people", "error", err)
-			encodeResponse(w, logger, http.StatusInternalServerError, responseErr{
+			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		encodeResponse(w, logger, http.StatusOK, responseCourse{
-			Course: mapOutputCourse(course),
+		EncodeResponse(w, logger, http.StatusOK, ResponseCourse{
+			Course: MapOutputCourse(course),
 		})
 	}
 }

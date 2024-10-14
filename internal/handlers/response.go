@@ -8,15 +8,15 @@ import (
 	"github.com/go-chi/httplog/v2"
 )
 
-type responseMsg struct {
+type ResponseMsg struct {
 	Message string `json:"message"`
 }
 
-type responseErr struct {
+type ResponseErr struct {
 	Error            string    `json:"error,omitempty"`
 }
 
-type outputPerson struct {
+type OutputPerson struct {
 	ID        int   `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
@@ -24,14 +24,14 @@ type outputPerson struct {
 	Age       int    `json:"age"`
 }
 
-type outputCourse struct {
+type OutputCourse struct {
 	ID        int   `json:"id"`
 	Name string `json:"name"`
 }
 
-// mapOutput maps a models.User struct to an outputUser struct.
-func mapOutput(person models.Person) outputPerson {
-	return outputPerson{
+// MapOutput maps a models.User struct to an outputUser struct.
+func MapOutput(person models.Person) OutputPerson {
+	return OutputPerson{
 		ID:        int(person.ID),
 		FirstName: person.FirstName,
 		LastName:  person.LastName,
@@ -40,30 +40,30 @@ func mapOutput(person models.Person) outputPerson {
 	}
 }
 
-// mapOutput maps a models.User struct to an outputUser struct.
-func mapOutputCourse(course models.Course) outputCourse {
-	return outputCourse{
+// MapOutput maps a models.User struct to an outputUser struct.
+func MapOutputCourse(course models.Course) OutputCourse {
+	return OutputCourse{
 		ID:        int(course.ID),
 		Name: course.Name,
 	}
 }
 
-// mapMultipleOutput maps a slice of []models.User to a slice of []outputUser.
-func mapMultipleOutput(person []models.Person) []outputPerson {
-	peopleOut := make([]outputPerson, len(person))
+// MapMultipleOutput maps a slice of []models.User to a slice of []outputUser.
+func MapMultipleOutput(person []models.Person) []OutputPerson {
+	peopleOut := make([]OutputPerson, len(person))
 	for i := 0; i < len(person); i++ {
-		personOut := mapOutput(person[i])
+		personOut := MapOutput(person[i])
 		peopleOut[i] = personOut
 	}
 
 	return peopleOut
 }
 
-// mapMultipleOutput maps a slice of []models.User to a slice of []outputUser.
-func mapMultipleCourseOutput(course []models.Course) []outputCourse {
-	coursesOut := make([]outputCourse, len(course))
+// MapMultipleOutput maps a slice of []models.User to a slice of []outputUser.
+func MapMultipleCourseOutput(course []models.Course) []OutputCourse {
+	coursesOut := make([]OutputCourse, len(course))
 	for i := 0; i < len(course); i++ {
-		courseOut := mapOutputCourse(course[i])
+		courseOut := MapOutputCourse(course[i])
 		coursesOut[i] = courseOut
 	}
 
@@ -71,24 +71,24 @@ func mapMultipleCourseOutput(course []models.Course) []outputCourse {
 }
 
 
-type responsePerson struct{
-	Person outputPerson `json:"person"`
+type ResponsePerson struct{
+	Person OutputPerson `json:"person"`
 }
 
-type responsePeople struct {
-	People [] outputPerson `json:"people"`
+type ResponsePeople struct {
+	People [] OutputPerson `json:"people"`
 }
 
-type responseCourse struct{
-	Course outputCourse `json:"course"`
+type ResponseCourse struct{
+	Course OutputCourse `json:"course"`
 }
 
-type responseCourses struct {
-	Courses [] outputCourse `json:"courses"`
+type ResponseCourses struct {
+	Courses [] OutputCourse `json:"courses"`
 }
 
-// encodeResponse encodes data as a JSON response.
-func encodeResponse(w http.ResponseWriter, logger *httplog.Logger, status int, data any) {
+// EncodeResponse encodes data as a JSON response.
+func EncodeResponse(w http.ResponseWriter, logger *httplog.Logger, status int, data any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	if err := json.NewEncoder(w).Encode(data); err != nil {

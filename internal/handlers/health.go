@@ -13,12 +13,12 @@ import (
 // @Tags		health-check
 // @Accept		json
 // @Produce		json
-// @Success		200				{object}	handlers.responseMsg
+// @Success		200				{object}	handlers.ResponseMsg
 // @Router		/health-check	[GET]
 func HandleHealth(logger *httplog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Health check called")
-		encodeResponse(w, logger, http.StatusOK, responseMsg{
+		EncodeResponse(w, logger, http.StatusOK, ResponseMsg{
 			Message: "hello world",
 		})
 	}
