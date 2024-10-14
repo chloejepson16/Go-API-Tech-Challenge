@@ -36,7 +36,6 @@ func TestHandleListCourses(t *testing.T) {
 		{ID: 3, Name: "UI Design"},
 		{ID: 1, Name: "Programmer"},
 		{ID: 4, Name: "Introduction to Go"},
-		{ID: 0, Name: "string"},
 	}
 
 	mockService.On("ListCourses", mock.Anything).Return(expectedCourses, nil)
@@ -51,8 +50,7 @@ func TestHandleListCourses(t *testing.T) {
 			{"id": 2, "name": "Databases"},
 			{"id": 3, "name": "UI Design"},
 			{"id": 1, "name": "Programmer"},
-			{"id": 4, "name": "Introduction to Go"},
-			{"id": 0, "name": "string"}
+			{"id": 4, "name": "Introduction to Go"}
 		]
 	}`
 
