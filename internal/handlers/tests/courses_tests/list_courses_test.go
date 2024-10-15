@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers/courses"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/httplog/v2"
 	"github.com/stretchr/testify/assert"

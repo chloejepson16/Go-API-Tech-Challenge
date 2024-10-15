@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -36,24 +37,24 @@ func HandleUpdateCourse(logger *httplog.Logger, service courseUpdater) http.Hand
 		id, err := strconv.Atoi(idString)
 		if err != nil {
 			logger.Error("error getting ID", "error", err)
-			EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusBadRequest, handlers.ResponseErr{
 				Error: "Not a valid ID",
 			})
 			return
 		}
 
 		// get and validate body as object
-		courseIn, problems, err := DecodeValidateBody[InputCourse, models.Course](r)
+		courseIn, problems, err := handlers.DecodeValidateBody[handlers.InputCourse, models.Course](r)
 		if err != nil {
 			switch {
 			case len(problems) > 0:
 				logger.Error("Problems validating input", "error", err, "problems", problems)
-				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
+				handlers.EncodeResponse(w, logger, http.StatusBadRequest, handlers.ResponseErr{
 					Error: "error validating courseIn",
 				})
 			default:
 				logger.Error("BodyParser error", "error", err)
-				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
+				handlers.EncodeResponse(w, logger, http.StatusBadRequest, handlers.ResponseErr{
 					Error: "missing values or malformed body",
 				})
 			}
@@ -64,15 +65,15 @@ func HandleUpdateCourse(logger *httplog.Logger, service courseUpdater) http.Hand
 		course, err := service.UpdateCourse(ctx, id, courseIn)
 		if err != nil {
 			logger.Error("error updating object in database", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error updating object",
 			})
 			return
 		}
 
 		// return response
-		courseOut := MapOutputCourse(course)
-		EncodeResponse(w, logger, http.StatusOK, ResponseCourse{
+		courseOut := handlers.MapOutputCourse(course)
+		handlers.EncodeResponse(w, logger, http.StatusOK, handlers.ResponseCourse{
 			Course: courseOut,
 		})
 	}

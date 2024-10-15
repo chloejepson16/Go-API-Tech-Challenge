@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
+	peopleHandlers "github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers/people"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -51,7 +52,7 @@ func TestHandleListPeople(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	handler := handlers.HandleListPeople(logger, mockService)
+	handler := peopleHandlers.HandleListPeople(logger, mockService)
 	handler.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
@@ -85,7 +86,7 @@ func TestHandleGetPersonByID(t *testing.T) {
 	rctx.URLParams.Add("id", strconv.Itoa(expectedPerson.ID))
 	req = req.WithContext(context.WithValue(req.Context(), chi.RouteCtxKey, rctx))
 
-	handler := handlers.HandleGetPersonByID(logger, mockService)
+	handler := peopleHandlers.HandleGetPersonByID(logger, mockService)
 	handler.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)

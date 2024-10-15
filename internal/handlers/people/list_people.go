@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -35,15 +36,15 @@ func HandleListPeople(logger *httplog.Logger, service peopleLister) http.Handler
 		people, err := service.ListPeople(ctx)
 		if err != nil {
 			logger.Error("error getting all people", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
 
 		// return response
-		peopleOut := MapMultipleOutput(people)
-		EncodeResponse(w, logger, http.StatusOK, ResponsePeople{
+		peopleOut := handlers.MapMultipleOutput(people)
+		handlers.EncodeResponse(w, logger, http.StatusOK, handlers.ResponsePeople{
 			People: peopleOut,
 		})
 	}
@@ -73,13 +74,13 @@ func HandleGetPersonByID(logger *httplog.Logger, service peopleLister) http.Hand
 		person, err := service.ListPersonByID(ctx, id)
 		if err != nil {
 			logger.Error("error getting specific people", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
-			Person: MapOutput(person),
+		handlers.EncodeResponse(w, logger, http.StatusOK, handlers.ResponsePerson{
+			Person: handlers.MapOutput(person),
 		})
 	}
 }

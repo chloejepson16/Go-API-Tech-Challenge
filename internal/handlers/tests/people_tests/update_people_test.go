@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers/people"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -115,5 +115,5 @@ func TestHandleUpdatePerson_DBError(t *testing.T) {
 	handler := handlers.HandleUpdatePerson(logger, mockService)
 	handler.ServeHTTP(rr, req)
 
-	assert.Equal(t, http.StatusInternalServerError, rr.Code)
+	assert.Equal(t, http.StatusBadRequest, rr.Code)
 }

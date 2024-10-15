@@ -2,6 +2,8 @@ package routes
 
 import (
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
+	courseHandlers "github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers/courses"
+	peopleHandlers "github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers/people"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/services"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -33,11 +35,11 @@ func RegisterRoutes(router *chi.Mux, logger *httplog.Logger, svs *services.Perso
 	}
 
 	router.Get("/", handlers.HandleHelloWorld(logger))
-	router.Get("/people", handlers.HandleListPeople(logger, svs))
-	router.Get("/people/{id}", handlers.HandleGetPersonByID(logger, svs))
-	router.Put("/people/{id}", handlers.HandleUpdatePerson(logger, svs))
-	router.Delete("/people/{id}", handlers.HandleDeletePersonByID(logger, svs))
-	router.Post("/people", handlers.HandleCreatePerson(logger, svs))
+	router.Get("/people", peopleHandlers.HandleListPeople(logger, svs))
+	router.Get("/people/{id}", peopleHandlers.HandleGetPersonByID(logger, svs))
+	router.Put("/people/{id}", peopleHandlers.HandleUpdatePerson(logger, svs))
+	router.Delete("/people/{id}", peopleHandlers.HandleDeletePersonByID(logger, svs))
+	router.Post("/people", peopleHandlers.HandleCreatePerson(logger, svs))
 }
 
 func RegisterRoutesForCourses(router *chi.Mux, logger *httplog.Logger, svs *services.CourseService, opts ...Option){
@@ -52,9 +54,9 @@ func RegisterRoutesForCourses(router *chi.Mux, logger *httplog.Logger, svs *serv
 	if options.registerHealthRoute {
 		router.Get("/health-check", handlers.HandleHealth(logger))
 	}
-	router.Get("/courses", handlers.HandleListCourses(logger, svs))
-	router.Get("/courses/{id}", handlers.HandleGetCourseById(logger, svs))
-	router.Put("/courses/{id}", handlers.HandleUpdateCourse(logger, svs))
-	router.Delete("/courses/{id}", handlers.HandleDeleteCourseByID(logger, svs))
-	router.Post("/courses", handlers.HandleCreateCourse(logger, svs))
+	router.Get("/courses", courseHandlers.HandleListCourses(logger, svs))
+	router.Get("/courses/{id}", courseHandlers.HandleGetCourseById(logger, svs))
+	router.Put("/courses/{id}", courseHandlers.HandleUpdateCourse(logger, svs))
+	router.Delete("/courses/{id}", courseHandlers.HandleDeleteCourseByID(logger, svs))
+	router.Post("/courses", courseHandlers.HandleCreateCourse(logger, svs))
 }

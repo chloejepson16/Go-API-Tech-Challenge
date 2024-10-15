@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -35,15 +36,15 @@ func HandleListCourses(logger *httplog.Logger, service courseLister) http.Handle
 		courses, err := service.ListCourses(ctx)
 		if err != nil {
 			logger.Error("error getting all courses", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
 
 		// return response
-		coursesOut := MapMultipleCourseOutput(courses)
-		EncodeResponse(w, logger, http.StatusOK, ResponseCourses{
+		coursesOut := handlers.MapMultipleCourseOutput(courses)
+		handlers.EncodeResponse(w, logger, http.StatusOK, handlers.ResponseCourses{
 			Courses: coursesOut,
 		})
 	}
@@ -73,13 +74,13 @@ func HandleGetCourseById(logger *httplog.Logger, service courseLister) http.Hand
 		course, err := service.ListCourseByID(ctx, id)
 		if err != nil {
 			logger.Error("error getting specific people", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		EncodeResponse(w, logger, http.StatusOK, ResponseCourse{
-			Course: MapOutputCourse(course),
+		handlers.EncodeResponse(w, logger, http.StatusOK, handlers.ResponseCourse{
+			Course: handlers.MapOutputCourse(course),
 		})
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers/courses"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"

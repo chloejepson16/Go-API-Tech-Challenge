@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
@@ -38,13 +39,13 @@ func HandleDeletePersonByID(logger *httplog.Logger, service peopleDeleter) http.
 		person, err:= service.DeletePersonByID(ctx, id)
 		if err != nil{
 			logger.Error("error deleting specific people", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error retrieving data",
 			})
 			return
 		}
-		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
-			Person: MapOutput(person),
+		handlers.EncodeResponse(w, logger, http.StatusOK, handlers.ResponsePerson{
+			Person: handlers.MapOutput(person),
 		})
 	}
 }

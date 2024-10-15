@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
 	"github.com/go-chi/httplog/v2"
 )
@@ -28,17 +29,17 @@ func HandleCreatePerson(logger *httplog.Logger, service personCreator) http.Hand
 		ctx := r.Context()
 
 		// get and validate body as object
-		personIn, problems, err := DecodeValidateBody[InputPerson](r)
+		personIn, problems, err := handlers.DecodeValidateBody[handlers.InputPerson](r)
 		if err != nil {
 			switch {
 			case len(problems) > 0:
 				logger.Error("Problems validating input", "error", err, "problems", problems)
-				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
+				handlers.EncodeResponse(w, logger, http.StatusBadRequest, handlers.ResponseErr{
 					Error: "error validating personIn",
 				})
 			default:
 				logger.Error("BodyParser error", "error", err)
-				EncodeResponse(w, logger, http.StatusBadRequest, ResponseErr{
+				handlers.EncodeResponse(w, logger, http.StatusBadRequest, handlers.ResponseErr{
 					Error: "missing values or malformed body",
 				})
 			}
@@ -48,15 +49,15 @@ func HandleCreatePerson(logger *httplog.Logger, service personCreator) http.Hand
 		person, err:= service.CreatePerson(ctx, personIn)
 		if err != nil {
 			logger.Error("error creating object in database", "error", err)
-			EncodeResponse(w, logger, http.StatusInternalServerError, ResponseErr{
+			handlers.EncodeResponse(w, logger, http.StatusInternalServerError, handlers.ResponseErr{
 				Error: "Error creating object",
 			})
 			return
 		}
 
 		// return response
-		personOut := MapOutput(person)
-		EncodeResponse(w, logger, http.StatusOK, ResponsePerson{
+		personOut := handlers.MapOutput(person)
+		handlers.EncodeResponse(w, logger, http.StatusOK,handlers.ResponsePerson{
 			Person: personOut,
 		})
 	}
