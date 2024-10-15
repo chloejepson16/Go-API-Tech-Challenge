@@ -10,7 +10,7 @@ import (
 
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/handlers"
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -45,7 +45,7 @@ func TestHandleListPeople(t *testing.T) {
 		{ID: 13, FirstName: "John", LastName: "Doe", PersonType: "student", Age: 25},
 		{ID: 14, FirstName: "John", LastName: "Doe", PersonType: "student", Age: 25},
 	}
-
+	mockService.On("ListPeople", mock.Anything).Return(people, nil)
 	req := httptest.NewRequest(http.MethodGet, "/people", nil)
 	req.Header.Set("Accept", "application/json")
 

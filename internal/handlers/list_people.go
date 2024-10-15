@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/chloejepson16/Go-API-Tech-Challenge/internal/models"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httplog/v2"
 )
 
@@ -56,10 +56,10 @@ func HandleListPeople(logger *httplog.Logger, service peopleLister) http.Handler
 // @Tags        people
 // @Accept      json
 // @Produce     json
-// @Param       id   path     int  true  "id"
-// @Success		200		{object}	handlers.ResponseMsg
-// @Failure		500		{object}	handlers.ResponseErr
-// @Router      /people/{id}  [GET]
+// @Param       id      path    int  true  "id"
+// @Success     200     {object} handlers.ResponseMsg
+// @Failure     500     {object} handlers.ResponseErr
+// @Router      /people/{id} [GET]
 func HandleGetPersonByID(logger *httplog.Logger, service peopleLister) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// setup
