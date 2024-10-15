@@ -119,6 +119,16 @@ func (s CourseService) DeleteCourseByID(ctx context.Context, id int) (models.Cou
 		return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] failed to retrieve course: %w", err)
 	}
 
+	// Delete related entries from person_course table first
+	_, err = s.database.ExecContext(
+		ctx,
+		`DELETE FROM "person_course" WHERE course_id = $1`,
+		id,
+	)
+	if err != nil {
+		return models.Course{}, fmt.Errorf("[in services.DeleteCourseByID] failed to delete from person_course: %w", err)
+	}
+
 	result, err := s.database.ExecContext(
 		ctx,
 		`DELETE FROM "course" WHERE id = $1`,

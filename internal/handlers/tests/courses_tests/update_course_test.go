@@ -43,7 +43,7 @@ func TestHandleUpdateCourse(t *testing.T) {
 
 	mockService.On("UpdateCourse", mock.Anything, courseIn.ID, courseIn).Return(courseOut, nil)
 	body, _ := json.Marshal(courseIn)
-	req := httptest.NewRequest(http.MethodPut, "/courses/12", bytes.NewBuffer(body))
+	req := httptest.NewRequest(http.MethodPut, "/courses/"+strconv.Itoa(courseIn.ID), bytes.NewBuffer(body))
 	req = req.WithContext(context.Background())
 
 	rctx := chi.NewRouteContext()

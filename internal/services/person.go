@@ -99,6 +99,15 @@ func (s PersonService) DeletePersonByID(ctx context.Context, id int) (models.Per
 		return models.Person{}, fmt.Errorf("[in services.DeletePersonByID] failed to retrieve person: %w", err)
 	}
 
+	_, err = s.database.ExecContext(
+		ctx,
+		`DELETE FROM "person_course" WHERE person_id = $1`,
+		id,
+	)
+	if err != nil {
+		return models.Person{}, fmt.Errorf("[in services.DeletePersonByID] failed to delete from person_course: %w", err)
+	}
+
 	result, err := s.database.ExecContext(
 		ctx,
 		`DELETE FROM "person" WHERE id = $1`,
